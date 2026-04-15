@@ -1,4 +1,4 @@
-package com.aynclub.akilleffect.Command;
+package com.aynclub.akilleffect.commands;
 
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.utils.User;
@@ -9,25 +9,26 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Help implements CommandExecutor {
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            if (args.length < 1) {
-                Player p = (Player) sender;
-                p.sendMessage(Utils.colorize(((String) Utils.gfc("config", "help-command-message"))));
-            } else {
-                String menu = args[0];
-                if (menu.equals("menu")) {
-                    Player p = (Player) sender;
-                    Main.getManager().buildInventory(User.getUser(p.getUniqueId())).open(p);
-                } else {
-                    Player p = (Player) sender;
-                    p.sendMessage("Unknown command.");
-                }
-            }
-        } else {
-            System.out.println("Only players in game can use this command.");
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("Only players can use this command.");
+            return true;
         }
+
+        Player player = (Player) sender;
+        if (args.length < 1 || "menu".equalsIgnoreCase(args[0])) {
+            Main.getManager().buildInventory(User.getUser(player.getUniqueId())).open(player);
+            return true;
+        }
+
+        if ("help".equalsIgnoreCase(args[0])) {
+            player.sendMessage(Utils.colorize(String.valueOf(Utils.gfc("config", "help-command-message"))));
+            return true;
+        }
+
+        player.sendMessage(Main.PREFIX + " Unknown command. Use /killeffect or /killeffect help.");
         return true;
     }
 }

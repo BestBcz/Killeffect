@@ -1,1 +1,8 @@
-token: "token here."
+# Legacy field from the old paid build. Ignored in this open-source release.
+token: ""
+
+help-command-message: |
+  aKilleffect - A Killeffect plugin made by Aynclub.
+
+  /killeffect - Open the effect menu.
+  /killeffect help - Show this message.

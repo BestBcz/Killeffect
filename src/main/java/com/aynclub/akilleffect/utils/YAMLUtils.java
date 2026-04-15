@@ -19,8 +19,13 @@ public class YAMLUtils {
     private final FileConfiguration config;
 
     private YAMLUtils(String name, JavaPlugin javaPlugin) {
-        if (createds.containsKey(name)) throw new IllegalArgumentException();
+        if (createds.containsKey(name)) {
+            throw new IllegalArgumentException();
+        }
         this.name = name;
+        if (!javaPlugin.getDataFolder().exists()) {
+            javaPlugin.getDataFolder().mkdirs();
+        }
         this.file = new File(javaPlugin.getDataFolder(), name + ".yml");
         this.config = YamlConfiguration.loadConfiguration(this.file);
     }
@@ -38,7 +43,9 @@ public class YAMLUtils {
     public void build(String header) {
         if (!this.file.exists()) {
             config.options().copyDefaults(true);
-            if (!header.equals("")) config.options().header(header);
+            if (!header.equals("")) {
+                config.options().header(header);
+            }
             save();
         }
     }

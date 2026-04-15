@@ -1,8 +1,8 @@
-package com.aynclub.akilleffect.event;
+package com.aynclub.akilleffect.events;
 
 import com.aynclub.akilleffect.Main;
-import com.aynclub.akilleffect.database.FlatFile;
 import com.aynclub.akilleffect.effect.MainEffectKill;
+import com.aynclub.akilleffect.managers.FlatFile;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import org.bukkit.entity.Player;
@@ -13,7 +13,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-
 public class Events implements Listener {
 
     @EventHandler
@@ -23,105 +22,93 @@ public class Events implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        FlatFile.setValue(player.getUniqueId());
+        FlatFile.setValue(event.getPlayer().getUniqueId());
     }
+
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         if (event.getInventory() == null || event.getCurrentItem() == null || event.getWhoClicked() == null) {
             return;
         }
-        if (event.getView().getTitle().equalsIgnoreCase(Utils.colorize((String) Utils.gfc("messages", "menu.effectKill")))) {
-            event.setCancelled(true);
-            if (!event.getCurrentItem().hasItemMeta() || !event.getCurrentItem().getItemMeta().hasDisplayName()) {
-                return;
-            }
-            String despawn = Utils.colorize((String) Utils.gfc("messages", "menu.despawn"));
-            String spawn = Utils.colorize((String) Utils.gfc("messages", "menu.spawn"));
-            User user = User.getUser(event.getWhoClicked().getUniqueId());
-            if (event.getCurrentItem().getItemMeta().getDisplayName().startsWith(despawn) && user.getEffectKill() != null) {
+
+        String menuTitle = Utils.colorize(String.valueOf(Utils.gfc("messages", "menu.effectKill")));
+        if (!event.getInventory().getTitle().equalsIgnoreCase(menuTitle)) {
+            return;
+        }
+
+        event.setCancelled(true);
+        if (!event.getCurrentItem().hasItemMeta() || !event.getCurrentItem().getItemMeta().hasDisplayName()) {
+            return;
+        }
+
+        User user = User.getUser(event.getWhoClicked().getUniqueId());
+        String displayName = event.getCurrentItem().getItemMeta().getDisplayName();
+        String despawnPrefix = Utils.colorize(String.valueOf(Utils.gfc("messages", "menu.despawn")));
+        String spawnPrefix = Utils.colorize(String.valueOf(Utils.gfc("messages", "menu.spawn")));
+
+        if (displayName.startsWith(despawnPrefix)) {
+            if (user.getEffectKill() != null) {
                 user.getEffectKill().despawn(user);
-                event.getWhoClicked().closeInventory();
+                user.getPlayer().sendMessage(Utils.colorize(String.valueOf(Utils.gfc("messages", "remove")).replace("%prefix%", Main.PREFIX)));
             }
-            if (event.getCurrentItem().getItemMeta().getDisplayName().startsWith(spawn)) {
-                if (user.getEffectKill() != null) {
-                    user.getEffectKill().despawn(user);
-                }
-                String displayName = event.getCurrentItem().getItemMeta().getDisplayName();
-               // System.out.println(displayName);
-
-                String result = extractContent(displayName);
-                //System.out.println(result);
-                String name = getEffectByName(result);
-                //System.out.println("name " + name);
-
-                MainEffectKill ek = Main.getInstance().getEffectKill().get(name);
-
-                String input = String.valueOf(ek);
-                int lastDotIndex = input.lastIndexOf(".");
-                int atSymbolIndex = input.indexOf("@");
-                String extractedText = input.substring(lastDotIndex + 1, atSymbolIndex);
-                if (!user.getPlayer().hasPermission("akilleffect.effect." + extractedText)) {
-                    user.getPlayer().sendMessage(Utils.colorize(((String) Utils.gfc("messages", "no-permission")).replace("%prefix%", Main.prefix)));
-                    event.getWhoClicked().closeInventory();
-                    return;
-                }
-                if (ek != null) {
-                        user.setEffectKill(ek);
-                        System.out.println(ek);
-                        String input1 = String.valueOf(ek);
-                        int lastDotIndex1 = input1.lastIndexOf(".");
-                        int atSymbolIndex1 = input1.indexOf("@");
-                        String extractedText1 = input1.substring(lastDotIndex1 + 1, atSymbolIndex1);
-                        String lowerCaseString = extractedText1.toLowerCase();
-                        String ename = (String) Utils.gfc("messages", "effectKill." + lowerCaseString + ".name");
-                        //System.out.println("ex " + extractedText1);
-                        //System.out.println("ename " + ename);
-                        event.getWhoClicked().sendMessage
-                                (Utils.colorize(((String) Utils.gfc("messages", "spawn")).replaceAll("%effectname%", ename)).replaceAll("%prefix%", Main.prefix));
-                        event.getWhoClicked().closeInventory();
-                    } else{
-                        event.getWhoClicked().sendMessage("null");
-                    }
-                }
+            event.getWhoClicked().closeInventory();
+            return;
         }
 
-
-    }
-
-    public String getEffectByName(String name) {
-        for (MainEffectKill effectKills : MainEffectKill.instanceList) {
-            String displayname = name.replaceAll(Utils.colorize((String) Utils.gfc("messages", "menu.spawn")) + " ", "");
-            if (effectKills.getDisplayName().equalsIgnoreCase(displayname)) {
-                return effectKills.getName();
-            }
+        if (!displayName.startsWith(spawnPrefix)) {
+            return;
         }
-        return null;
+
+        String effectName = extractContent(displayName);
+        if (effectName == null || effectName.isEmpty()) {
+            return;
+        }
+
+        MainEffectKill effectKill = Main.getInstance().getEffectKill().get(effectName.toLowerCase());
+        if (effectKill == null) {
+            return;
+        }
+
+        if (!user.getPlayer().hasPermission("akilleffect.effect." + effectKill.getName().toLowerCase())) {
+            user.getPlayer().sendMessage(Utils.colorize(String.valueOf(Utils.gfc("messages", "no-permission")).replace("%prefix%", Main.PREFIX)));
+            event.getWhoClicked().closeInventory();
+            return;
+        }
+
+        if (user.getEffectKill() != null) {
+            user.getEffectKill().despawn(user);
+        }
+
+        user.setEffectKill(effectKill);
+        String configuredName = String.valueOf(Utils.gfc("messages", "effectKill." + effectKill.getName() + ".name"));
+        user.getPlayer().sendMessage(Utils.colorize(String.valueOf(Utils.gfc("messages", "spawn"))
+                .replace("%prefix%", Main.PREFIX)
+                .replace("%effectname%", configuredName)));
+        event.getWhoClicked().closeInventory();
     }
 
     public static String extractContent(String input) {
-        int startIndex = input.indexOf("(");
-        int endIndex = input.indexOf(")");
+        int startIndex = input.lastIndexOf("(");
+        int endIndex = input.lastIndexOf(")");
 
         if (startIndex != -1 && endIndex != -1 && endIndex > startIndex) {
             return input.substring(startIndex + 1, endIndex);
         }
 
-        return "";  // 如果没有找到匹配的括号，则返回空字符串
+        return "";
     }
+
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        if (event.getEntity() != null) {
-            if (event.getEntity().getKiller() != null){
-                Player killer = event.getEntity().getKiller();
-                Player dead = event.getEntity();
-                User Dead = User.getUser(dead.getUniqueId());
-                User userKill = User.getUser(killer.getUniqueId());
-                if (userKill.getEffectKill() != null) {
-                    userKill.getEffectKill().update(Dead);
-                }
-            }
+        Player killer = event.getEntity().getKiller();
+        if (killer == null) {
+            return;
+        }
+
+        User deadUser = User.getUser(event.getEntity().getUniqueId());
+        User killerUser = User.getUser(killer.getUniqueId());
+        if (killerUser.getEffectKill() != null) {
+            killerUser.getEffectKill().update(deadUser, killerUser);
         }
     }
 }
-

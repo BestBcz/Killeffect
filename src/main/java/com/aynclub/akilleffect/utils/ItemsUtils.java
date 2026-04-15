@@ -1,9 +1,6 @@
 package com.aynclub.akilleffect.utils;
 
 import com.aynclub.akilleffect.utils.maths.MathUtils;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import com.mojang.authlib.properties.PropertyMap;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -38,11 +35,9 @@ public class ItemsUtils {
         return itemStack;
     }
 
-
     public static ItemStack getSkull(String s) {
         return getSkull(s, null);
     }
-
 
     public static ItemStack setName(ItemStack itemStack, String name) {
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -70,17 +65,25 @@ public class ItemsUtils {
     public static ItemStack getSkull(String texture, String name) {
         ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
-        GameProfile gameProfile = new GameProfile(UUID.randomUUID(), null);
-        PropertyMap propertyMap = gameProfile.getProperties();
-        if (name != null) skullMeta.setDisplayName(Utils.colorize(name));
-        propertyMap.put("textures", new Property("textures", texture));
+        if (name != null) {
+            skullMeta.setDisplayName(Utils.colorize(name));
+        }
+
         try {
+            Class<?> gameProfileClass = Class.forName("com.mojang.authlib.GameProfile");
+            Class<?> propertyClass = Class.forName("com.mojang.authlib.properties.Property");
+            Object gameProfile = gameProfileClass.getConstructor(UUID.class, String.class).newInstance(UUID.randomUUID(), null);
+            Object propertyMap = gameProfileClass.getMethod("getProperties").invoke(gameProfile);
+            Object property = propertyClass.getConstructor(String.class, String.class).newInstance("textures", texture);
+            propertyMap.getClass().getMethod("put", Object.class, Object.class).invoke(propertyMap, "textures", property);
+
             Field field = skullMeta.getClass().getDeclaredField("profile");
             field.setAccessible(true);
             field.set(skullMeta, gameProfile);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable ignored) {
+            // Fall back to a plain skull if authlib is not exposed by the runtime.
         }
+
         itemStack.setItemMeta(skullMeta);
         return itemStack;
     }
@@ -93,45 +96,39 @@ public class ItemsUtils {
                 b = 0;
                 color = Color.WHITE;
                 break;
-
             case 1:
                 b = 1;
                 color = Color.ORANGE;
                 break;
-
             case 2:
                 b = 2;
                 color = Color.FUCHSIA;
                 break;
-
             case 3:
                 b = 4;
                 color = Color.YELLOW;
                 break;
-
             case 4:
                 b = 5;
                 color = Color.GREEN;
                 break;
-
             case 5:
                 b = 9;
                 color = Color.NAVY;
                 break;
-
             case 6:
                 b = 10;
                 color = Color.PURPLE;
                 break;
-
             case 7:
                 b = 11;
                 color = Color.BLUE;
                 break;
-
             case 8:
                 b = 14;
                 color = Color.RED;
+                break;
+            default:
                 break;
         }
         return new ColorData(b, color);
@@ -155,8 +152,9 @@ public class ItemsUtils {
         ItemStack itemStack = item;
         SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
         skullMeta.setDisplayName(name);
-        if (lore != null)
+        if (lore != null) {
             skullMeta.setLore(lore);
+        }
         itemStack.setItemMeta(skullMeta);
         return itemStack;
     }
@@ -165,15 +163,18 @@ public class ItemsUtils {
         ItemStack itemStack = new ItemStack(material, 1, data);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(name);
-        if (lore != null)
+        if (lore != null) {
             itemMeta.setLore(Arrays.asList(lore));
+        }
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
 
     public ItemStack getItem() {
         ItemStack itemStack = new ItemStack(this.m, 1, this.data);
-        if (this.name != null) setDisplayName(itemStack, Utils.colorize(this.name));
+        if (this.name != null) {
+            setDisplayName(itemStack, Utils.colorize(this.name));
+        }
         return itemStack;
     }
 
@@ -186,11 +187,9 @@ public class ItemsUtils {
             this.color = color;
         }
 
-
         public byte getData() {
             return this.data;
         }
-
 
         public Color getColor() {
             return this.color;
