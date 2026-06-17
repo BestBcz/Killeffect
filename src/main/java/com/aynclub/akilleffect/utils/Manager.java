@@ -2,17 +2,12 @@ package com.aynclub.akilleffect.utils;
 
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
-import com.aynclub.akilleffect.effect.color.Black0;
-import com.aynclub.akilleffect.effect.color.Black1;
-import com.aynclub.akilleffect.effect.color.Black2;
-import com.aynclub.akilleffect.effect.color.Black3;
 import com.aynclub.akilleffect.effect.item.DropDiamond;
 import com.aynclub.akilleffect.effect.item.DropFlowers;
 import com.aynclub.akilleffect.effect.item.DropSoup;
 import com.aynclub.akilleffect.effect.particle.Firework;
 import com.aynclub.akilleffect.effect.particle.FrostFlame;
 import com.aynclub.akilleffect.effect.particle.Heart;
-import com.aynclub.akilleffect.effect.particle.Lightning;
 import com.aynclub.akilleffect.effect.particle.Rainbow;
 import com.aynclub.akilleffect.effect.particle.Redstone;
 import com.aynclub.akilleffect.effect.particle.Spiral;
@@ -21,14 +16,9 @@ import com.aynclub.akilleffect.effect.particle.TNTBreak;
 import com.aynclub.akilleffect.effect.particle.Wave;
 import com.aynclub.akilleffect.effect.sound.Music;
 import com.aynclub.akilleffect.effect.sound.Thunder;
-import com.aynclub.akilleffect.effect.special.Meteorite;
-import com.aynclub.akilleffect.effect.special.Satan;
 import com.aynclub.akilleffect.effect.special.SnowFall;
-import com.aynclub.akilleffect.effect.special.Squid;
 import com.aynclub.akilleffect.effect.special.Tornado;
 import com.aynclub.akilleffect.effect.visual.FireTrail;
-import com.aynclub.akilleffect.effect.visual.LightningVisual;
-import com.aynclub.akilleffect.effect.visual.NightVision;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
 import com.aynclub.akilleffect.utils.inventory.CustomInventory;
 import org.bukkit.ChatColor;
@@ -110,10 +100,6 @@ public class Manager {
         Main.getInstance().getEffectKill().clear();
 
         MainEffectKill.instanceList.addAll(Arrays.asList(
-                new Black0(),
-                new Black1(),
-                new Black2(),
-                new Black3(),
                 new DropSoup(),
                 new DropDiamond(),
                 new DropFlowers(),
@@ -123,20 +109,14 @@ public class Manager {
                 new TNT(),
                 new TNTBreak(),
                 new Redstone(),
-                new Lightning(),
                 new Firework(),
                 new Rainbow(),
                 new Spiral(),
                 new Tornado(),
-                new Squid(),
-                new Satan(),
                 new SnowFall(),
-                new Meteorite(),
                 new Thunder(),
                 new Music(),
-                new FireTrail(),
-                new LightningVisual(),
-                new NightVision()));
+                new FireTrail()));
 
         for (MainEffectKill effectKill : MainEffectKill.instanceList) {
             MainEffectKill.effectList.add(effectKill.getClass());
