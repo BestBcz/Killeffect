@@ -25,7 +25,7 @@ public class DropDiamond extends MainEffectKill {
     ArrayList<Item> items = new ArrayList<Item>();
 
     public DropDiamond() {
-        super("dropdiamond", YAMLUtils.get("messages").getFile().exists()?((String) Utils.gfc("messages", "effectKill.dropdiamond.name")) : ("§cDropDiamond"), new ArrayList<>(Arrays.asList("&7A simple gadget...", "&7To make your kills even more entertaining!")), Heads.DIAMOND.getTexture());
+        super("dropdiamond", YAMLUtils.get("messages").getFile().exists()?((String) Utils.gfc("messages", "effectKill.dropdiamond.name")) : ("&b钻石雨"), new ArrayList<String>(Arrays.asList("&7让钻石从击杀点四散飞出。", "&7胜利时更加耀眼。")), Heads.DIAMOND.getTexture());
     }
 
     @Override

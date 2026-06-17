@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class Spiral extends MainEffectKill {
 
     public Spiral() {
-        super("spiral", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.spiral.name")) : ("&cSpiral"), new ArrayList<String>(Arrays.asList("&7A rising spiral of magic crit.", "&7Wraps the victim in particles.")), Heads.WAVE.getTexture());
+        super("spiral", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.spiral.name")) : ("&5螺旋"), new ArrayList<String>(Arrays.asList("&7魔法暴击粒子螺旋升起。", "&7将目标包进上升粒子中。")), Heads.WAVE.getTexture());
     }
 
     @Override

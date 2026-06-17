@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class FireTrail extends MainEffectKill {
 
     public FireTrail() {
-        super("firetrail", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.firetrail.name")) : ("&cFireTrail"), new ArrayList<String>(Arrays.asList("&7Flame circles the victim.", "&7A short burning trail effect.")), Heads.Fire.getTexture());
+        super("firetrail", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.firetrail.name")) : ("&6火焰轨迹"), new ArrayList<String>(Arrays.asList("&7火焰围绕击杀点旋转。", "&7留下短暂燃烧轨迹。")), Heads.Fire.getTexture());
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Lightning extends MainEffectKill {
 
     public Lightning() {
-        super("lightning", getConfiguredName(), new ArrayList<String>(Arrays.asList("&7Micet-style death lightning.", "&7A clean lightning strike at the victim.")), Heads.Lightning.getTexture());
+        super("lightning", getConfiguredName(), new ArrayList<String>(Arrays.asList("&7Micet 风格的默认雷击。", "&7击杀时落下一道无伤闪电。")), Heads.Lightning.getTexture());
     }
 
     @Override
@@ -37,10 +37,10 @@ public class Lightning extends MainEffectKill {
 
     private static String getConfiguredName() {
         if (!YAMLUtils.get("messages").getFile().exists()) {
-            return "&cLightning";
+            return "&b雷击";
         }
 
         Object configuredName = Utils.gfc("messages", "effectKill.lightning.name");
-        return configuredName instanceof String ? (String) configuredName : "&cLightning";
+        return configuredName instanceof String ? (String) configuredName : "&b雷击";
     }
 }

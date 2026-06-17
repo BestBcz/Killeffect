@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class Heart extends MainEffectKill {
 
     public Heart() {
-        super("heart", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.heart.name")) : ("§cHeart"), new ArrayList<>(Arrays.asList("&7A simple gadget...", "&7To make your kills even more entertaining!")), Heads.HEART.getTexture());
+        super("heart", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.heart.name")) : ("&c爱心"), new ArrayList<String>(Arrays.asList("&7在目标周围飘出爱心粒子。", "&7用一点温柔结束战斗。")), Heads.HEART.getTexture());
     }
 
     @Override

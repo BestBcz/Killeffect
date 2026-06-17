@@ -3,6 +3,7 @@ package com.aynclub.akilleffect.effect;
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.utils.ItemsUtils;
 import com.aynclub.akilleffect.utils.User;
+import com.aynclub.akilleffect.utils.Utils;
 import com.google.common.collect.Lists;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
@@ -27,9 +28,9 @@ public abstract class MainEffectKill implements Listener {
         instance = Main.getInstance();
         effectKill = this;
         ItemStack head = ItemsUtils.getSkull(texture);
-        itemStack = ItemsUtils.create(head, displayName, description);
+        itemStack = ItemsUtils.create(head, Utils.colorize(displayName == null ? capitalizeFirstLetter(name) : displayName), description);
         this.name = name;
-        this.displayName = capitalizeFirstLetter(name);
+        this.displayName = displayName == null ? capitalizeFirstLetter(name) : displayName;
         this.description = description;
         instance.getServer().getPluginManager().registerEvents(this, instance);
         instance.getEffectKill().put(name, this);
@@ -56,7 +57,12 @@ public abstract class MainEffectKill implements Listener {
     }
 
     public String getDisplayName() {
-        return displayName;
+        Object configuredName = Utils.gfc("messages", "effectKill." + name + ".name");
+        if (configuredName instanceof String) {
+            return Utils.colorize((String) configuredName);
+        }
+
+        return Utils.colorize(displayName);
     }
 
     public List<String> getDescription() {

@@ -13,7 +13,7 @@ public class Help implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Only players can use this command.");
+            sender.sendMessage("只有玩家可以使用这个指令。");
             return true;
         }
 
@@ -28,7 +28,7 @@ public class Help implements CommandExecutor {
             return true;
         }
 
-        player.sendMessage(Main.PREFIX + " Unknown command. Use /killeffect or /killeffect help.");
+        player.sendMessage(Main.PREFIX + " 未知子命令，请使用 /killeffect 或 /killeffect help。");
         return true;
     }
 }

@@ -22,7 +22,7 @@ public class Music extends MainEffectKill {
     private static final float[] PITCHES = new float[]{0.8F, 1.0F, 1.2F, 1.0F};
 
     public Music() {
-        super("music", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.music.name")) : ("&cMusic"), new ArrayList<String>(Arrays.asList("&7Plays a short melodic sequence.", "&7Notes rise above the victim.")), Heads.Redsoup.getTexture());
+        super("music", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.music.name")) : ("&a音符"), new ArrayList<String>(Arrays.asList("&7播放一段短促旋律。", "&7音符会在目标上方升起。")), Heads.Redsoup.getTexture());
     }
 
     @Override

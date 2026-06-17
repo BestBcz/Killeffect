@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class FrostFlame extends MainEffectKill {
 
     public FrostFlame() {
-        super("frostflame", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.frostflame.name")) : ("§cFrostFlame"), new ArrayList<>(Arrays.asList("&7A simple gadget...", "&7To make your kills even more entertaining!")), Heads.FLAME.getTexture());
+        super("frostflame", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.frostflame.name")) : ("&b冰焰"), new ArrayList<String>(Arrays.asList("&7召唤一圈上升的冰蓝火焰。", "&7冷冽又利落。")), Heads.FLAME.getTexture());
     }
 
     @Override

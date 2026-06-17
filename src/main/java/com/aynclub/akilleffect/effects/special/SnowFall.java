@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class SnowFall extends MainEffectKill{
 
     public SnowFall() {
-        super("snowfall", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.snowfall.name")) : ("§cSnowFall"), new ArrayList<>(Arrays.asList("&7A simple gadget...", "&7To make your kills even more entertaining!")), Heads.Snow.getTexture());
+        super("snowfall", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.snowfall.name")) : ("&f雪落"), new ArrayList<String>(Arrays.asList("&7让雪花在击杀点旋转飘落。", "&7清冷干净的收尾。")), Heads.Snow.getTexture());
     }
 
     @Override

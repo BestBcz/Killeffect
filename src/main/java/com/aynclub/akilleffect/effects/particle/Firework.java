@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class Firework extends MainEffectKill {
 
     public Firework() {
-        super("firework", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.firework.name")) : ("&cFirework"), new ArrayList<String>(Arrays.asList("&7Bursting spark effects.", "&7A compact firework explosion.")), Heads.FIREWORK.getTexture());
+        super("firework", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.firework.name")) : ("&e烟花"), new ArrayList<String>(Arrays.asList("&7发射一束短促烟花。", "&7在目标上方炸开火花。")), Heads.FIREWORK.getTexture());
     }
 
     @Override

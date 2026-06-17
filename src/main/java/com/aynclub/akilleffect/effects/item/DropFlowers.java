@@ -26,7 +26,7 @@ public class DropFlowers extends MainEffectKill {
     ArrayList<Item> items = new ArrayList<Item>();
 
     public DropFlowers() {
-        super("dropflowers", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.dropflowers.name")) : ("§cDropFlowers"), new ArrayList<>(Arrays.asList("&7A simple gadget...", "&7 To make your kills even more entertaining!")), Heads.FIREWORK.getTexture());
+        super("dropflowers", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.dropflowers.name")) : ("&d鲜花绽放"), new ArrayList<String>(Arrays.asList("&7让鲜花在击杀点绽放散落。", "&7适合温柔又醒目的收尾。")), Heads.FIREWORK.getTexture());
     }
 
     @Override

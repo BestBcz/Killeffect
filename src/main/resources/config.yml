@@ -1,8 +1,8 @@
-# Legacy field from the old paid build. Ignored in this open-source release.
+# 旧付费版本遗留字段，当前开源版本不会使用。
 token: ""
 
 help-command-message: |
-  aKilleffect - A Killeffect plugin made by Aynclub.
+  &c击杀特效 &7- &f选择你喜欢的击杀收尾效果。
 
-  /killeffect - Open the effect menu.
-  /killeffect help - Show this message.
+  &e/killeffect &7- &f打开击杀特效菜单。
+  &e/killeffect help &7- &f查看帮助信息。

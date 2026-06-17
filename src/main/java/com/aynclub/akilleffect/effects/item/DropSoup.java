@@ -25,7 +25,7 @@ public class DropSoup extends MainEffectKill {
     ArrayList<Item> items = new ArrayList<Item>();
 
     public DropSoup() {
-        super("dropsoup", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.dropsoup.name")) : ("§cDropSoup"), new ArrayList<>(Arrays.asList("&7A simple gadget...", "&7To make your kills even more entertaining!")), Heads.SOUP.getTexture());
+        super("dropsoup", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.dropsoup.name")) : ("&c蘑菇汤喷洒"), new ArrayList<String>(Arrays.asList("&7在敌人倒下的位置喷出一圈蘑菇汤。", "&7短暂展示后会自动消失。")), Heads.SOUP.getTexture());
     }
 
     @Override

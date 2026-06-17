@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class Tornado extends MainEffectKill {
 
     public Tornado() {
-        super("tornado", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tornado.name")) : ("§cTornado"), new ArrayList<>(Arrays.asList("&7A simple gadget...", "&7To make your kills even more entertaining!")), Heads.TORNADO.getTexture());
+        super("tornado", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tornado.name")) : ("&7龙卷风"), new ArrayList<String>(Arrays.asList("&7召唤一阵云雾龙卷风。", "&7从地面卷起到空中。")), Heads.TORNADO.getTexture());
     }
 
     @Override

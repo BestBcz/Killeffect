@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class Wave extends MainEffectKill {
 
     public Wave() {
-        super("wave", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.wave.name")) : ("§cWave"), new ArrayList<>(Arrays.asList("&7A simple gadget...", "&7To make your kills even more entertaining!")), Heads.WAVE.getTexture());
+        super("wave", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.wave.name")) : ("&b冰雪波纹"), new ArrayList<String>(Arrays.asList("&7释放向上扩散的冰雪水波。", "&7粒子会环绕击杀位置升起。")), Heads.WAVE.getTexture());
     }
 
     @Override

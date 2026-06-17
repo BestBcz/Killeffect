@@ -18,7 +18,7 @@ public class Rainbow extends MainEffectKill {
     private static final byte[] COLORS = new byte[]{14, 1, 4, 5, 11, 10, 2};
 
     public Rainbow() {
-        super("rainbow", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.rainbow.name")) : ("&cRainbow"), new ArrayList<String>(Arrays.asList("&7A ring of colored dust.", "&7Seven colors around the victim.")), Heads.REDSTONE.getTexture());
+        super("rainbow", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.rainbow.name")) : ("&d彩虹"), new ArrayList<String>(Arrays.asList("&7用七彩尘环包围击杀位置。", "&7让胜利变得更鲜明。")), Heads.REDSTONE.getTexture());
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class TNT extends MainEffectKill {
 
     public TNT() {
-        super("tnt", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tnt.name")) : ("§cTNT"), new ArrayList<>(Arrays.asList("&7A simple gadget...", "&7To make your kills even more entertaining!")), Heads.TNT.getTexture());
+        super("tnt", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tnt.name")) : ("&cTNT 爆炸"), new ArrayList<String>(Arrays.asList("&7在击杀位置播放巨型爆炸特效。", "&7不会破坏方块。")), Heads.TNT.getTexture());
     }
 
     @Override

@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class Thunder extends MainEffectKill {
 
     public Thunder() {
-        super("thunder", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.thunder.name")) : ("&cThunder"), new ArrayList<String>(Arrays.asList("&7Thunder cracks over the victim.", "&7Ends with an explosion impact.")), Heads.ANGRY.getTexture());
+        super("thunder", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.thunder.name")) : ("&9雷暴"), new ArrayList<String>(Arrays.asList("&7召唤更强烈的雷暴收尾。", "&7带有雷声、烟雾和爆炸冲击。")), Heads.ANGRY.getTexture());
     }
 
     @Override

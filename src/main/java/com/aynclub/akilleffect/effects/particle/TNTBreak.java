@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class TNTBreak extends MainEffectKill {
 
     public TNTBreak() {
-        super("tntbreak", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tntbreak.name")) : ("§cTNTBreak"), new ArrayList<>(Arrays.asList("&7A simple gadget...", "&7To make your kills even more entertaining!")), Heads.TNT.getTexture());
+        super("tntbreak", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tntbreak.name")) : ("&cTNT 碎裂"), new ArrayList<String>(Arrays.asList("&7让 TNT 碎裂粒子四散。", "&7爆裂感十足。")), Heads.TNT.getTexture());
     }
 
     @Override

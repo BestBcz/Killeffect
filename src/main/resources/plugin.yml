@@ -1,7 +1,7 @@
 name: aKilleffect
 version: '1.0-SNAPSHOT'
 author: 73m9
-description: A Killeffect made by Aynclub
+description: Minecraft 1.7.10 击杀特效插件
 main: com.aynclub.akilleffect.Main
 commands:
   killeffect:
