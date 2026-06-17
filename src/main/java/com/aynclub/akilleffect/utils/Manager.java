@@ -14,6 +14,7 @@ import com.aynclub.akilleffect.effect.particle.Spiral;
 import com.aynclub.akilleffect.effect.particle.TNT;
 import com.aynclub.akilleffect.effect.particle.TNTBreak;
 import com.aynclub.akilleffect.effect.particle.Wave;
+import com.aynclub.akilleffect.effect.sound.Lightning;
 import com.aynclub.akilleffect.effect.sound.Music;
 import com.aynclub.akilleffect.effect.sound.Thunder;
 import com.aynclub.akilleffect.effect.special.SnowFall;
@@ -120,6 +121,7 @@ public class Manager {
                 new Spiral(),
                 new Tornado(),
                 new SnowFall(),
+                new Lightning(),
                 new Thunder(),
                 new Music(),
                 new FireTrail()));

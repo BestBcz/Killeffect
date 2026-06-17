@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class FlatFile {
+    private static final String DEFAULT_EFFECT_NAME = "lightning";
+    private static final String NO_EFFECT_NAME = "none";
 
     public static void checkDatabase() {
         File cfgFile = getDatabaseFile();
@@ -31,7 +33,7 @@ public class FlatFile {
         if (User.getUsers().containsKey(uuid) && User.getUsers().get(uuid).getEffectKill() != null) {
             cfg.set(uuid.toString(), User.getUser(uuid).getEffectKill().getName());
         } else {
-            cfg.set(uuid.toString(), null);
+            cfg.set(uuid.toString(), NO_EFFECT_NAME);
         }
 
         try {
@@ -43,14 +45,24 @@ public class FlatFile {
 
     public static void getValue(UUID uuid) {
         YamlConfiguration cfg = getConfig();
+        User user = User.getUser(uuid);
         if (!cfg.contains(uuid.toString())) {
+            user.setEffectKill(getDefaultEffect());
             return;
         }
 
-        User user = User.getUser(uuid);
         String effectName = cfg.getString(uuid.toString());
+        if (effectName == null || effectName.equalsIgnoreCase(NO_EFFECT_NAME)) {
+            user.setEffectKill(null);
+            return;
+        }
+
         MainEffectKill effectKill = Main.getInstance().getEffectKill().get(effectName);
-        user.setEffectKill(effectKill);
+        user.setEffectKill(effectKill == null ? getDefaultEffect() : effectKill);
+    }
+
+    private static MainEffectKill getDefaultEffect() {
+        return Main.getInstance().getEffectKill().get(DEFAULT_EFFECT_NAME);
     }
 
     private static File getDatabaseFile() {
