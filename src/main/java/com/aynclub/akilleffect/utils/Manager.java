@@ -56,13 +56,13 @@ public class Manager {
             } else if (config.equalsIgnoreCase("messages")) {
                 YAMLUtils yaml = YAMLUtils.get("messages");
                 checkAndSetConfigText(yaml, "prefix", "&4[!] &cKilleffect &7-");
-                checkAndSetConfigText(yaml, "no-permission", "%prefix% &cYou do not have the required permission!");
                 checkAndSetConfigText(yaml, "no-player", "%prefix% &cThis player %player% doesn't exist");
                 checkAndSetConfigText(yaml, "list-effect", "%prefix% &cThe Effect &e%effectname% &cdoes not exist. Here is the list of effects:&a ");
                 checkAndSetConfigText(yaml, "remove", "%prefix% &cYou deleted your effect");
                 checkAndSetConfigText(yaml, "spawn", "%prefix% &fYou selected %effectname%");
-                checkAndSetConfigText(yaml, "check-permission-yes", "&a&nYou can switch this effect!");
-                checkAndSetConfigText(yaml, "check-permission-no", "&c&nYou don't have this effect yet! :(");
+                removeConfigText(yaml, "no-permission");
+                removeConfigText(yaml, "check-permission-yes");
+                removeConfigText(yaml, "check-permission-no");
                 checkAndSetConfigText(yaml, "menu.effectKill", "&7EffectMenu");
                 checkAndSetConfigText(yaml, "menu.spawn", "&a[SELECT]");
                 checkAndSetConfigText(yaml, "menu.despawn", "&c[REMOVE]");
@@ -83,6 +83,12 @@ public class Manager {
     private static void checkAndSetConfigText(YAMLUtils yaml, String key, Object defaultValue) {
         if (!yaml.getConfig().contains(key)) {
             yaml.getConfig().set(key, defaultValue);
+        }
+    }
+
+    private static void removeConfigText(YAMLUtils yaml, String key) {
+        if (yaml.getConfig().contains(key)) {
+            yaml.getConfig().set(key, null);
         }
     }
 
@@ -151,12 +157,6 @@ public class Manager {
                 List<String> lores = new ArrayList<String>(YAMLUtils.get("messages").getConfig()
                         .getStringList("effectKill." + effectKill.getName() + ".description"));
                 lores = lores.stream().map(Utils::colorize).collect(Collectors.toList());
-                lores.add(" ");
-                if (user.getPlayer().hasPermission("akilleffect.effect." + effectKill.getName())) {
-                    lores.add(Utils.colorize(String.valueOf(Utils.gfc("messages", "check-permission-yes"))));
-                } else {
-                    lores.add(Utils.colorize(String.valueOf(Utils.gfc("messages", "check-permission-no"))));
-                }
 
                 customInventory.addItem(
                         ItemsUtils.create(effectKill.getItemStack(),

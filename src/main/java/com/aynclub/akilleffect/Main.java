@@ -8,7 +8,6 @@ import com.aynclub.akilleffect.utils.Manager;
 import com.aynclub.akilleffect.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -67,7 +66,6 @@ public class Main extends JavaPlugin {
             FlatFile.getValue(player.getUniqueId());
         }
 
-        registerEffectPermissions();
         getLogger().info("Loaded " + MainEffectKill.instanceList.size() + " kill effects.");
     }
 
@@ -80,15 +78,5 @@ public class Main extends JavaPlugin {
 
     public Map<String, MainEffectKill> getEffectKill() {
         return effectKillMap;
-    }
-
-    private void registerEffectPermissions() {
-        for (MainEffectKill effect : MainEffectKill.instanceList) {
-            String permissionName = "akilleffect.effect." + effect.getName().toLowerCase();
-            Permission permission = Bukkit.getPluginManager().getPermission(permissionName);
-            if (permission == null) {
-                Bukkit.getPluginManager().addPermission(new Permission(permissionName));
-            }
-        }
     }
 }

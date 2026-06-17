@@ -69,12 +69,6 @@ public class Events implements Listener {
             return;
         }
 
-        if (!user.getPlayer().hasPermission("akilleffect.effect." + effectKill.getName().toLowerCase())) {
-            user.getPlayer().sendMessage(Utils.colorize(String.valueOf(Utils.gfc("messages", "no-permission")).replace("%prefix%", Main.PREFIX)));
-            event.getWhoClicked().closeInventory();
-            return;
-        }
-
         if (user.getEffectKill() != null) {
             user.getEffectKill().despawn(user);
         }
