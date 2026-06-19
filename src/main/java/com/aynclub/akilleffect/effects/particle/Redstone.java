@@ -9,6 +9,7 @@ import com.aynclub.akilleffect.utils.maths.MathUtils;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,10 +22,13 @@ public class Redstone extends MainEffectKill {
 
     @Override
     public void update(User user) {
-        Location loc = user.getPlayer().getLocation();
-        for (double height = 0.0; height < 1.0; height += 0.8) {
-            user.getPlayer().getWorld().playEffect(loc.clone().add(MathUtils.randomRange(-1.0f, 1.0f), height, MathUtils.randomRange(-1.0f, 1.0f)), Effect.STEP_SOUND, Material.REDSTONE_BLOCK);
-            user.getPlayer().getWorld().playEffect(loc.clone().add(MathUtils.randomRange(1.0f, -1.0f), height, MathUtils.randomRange(-1.0f, 1.0f)), Effect.STEP_SOUND, Material.REDSTONE_BLOCK);
+        Location base = user.getPlayer().getLocation().clone().add(0.0D, 1.0D, 0.0D);
+        user.getPlayer().getWorld().playSound(base, Sound.DIG_STONE, 1.0F, 1.0F);
+        for (int i = 0; i < 12; i++) {
+            user.getPlayer().getWorld().playEffect(base.clone().add(
+                    MathUtils.randomRange(-0.85f, 0.85f),
+                    MathUtils.randomRange(-0.35f, 0.65f),
+                    MathUtils.randomRange(-0.85f, 0.85f)), Effect.STEP_SOUND, Material.REDSTONE_BLOCK);
         }
     }
 }
