@@ -14,6 +14,7 @@ import com.aynclub.akilleffect.effect.particle.Spiral;
 import com.aynclub.akilleffect.effect.particle.TNT;
 import com.aynclub.akilleffect.effect.particle.TNTBreak;
 import com.aynclub.akilleffect.effect.particle.Wave;
+import com.aynclub.akilleffect.effect.particle.WoolBreak;
 import com.aynclub.akilleffect.effect.sound.Lightning;
 import com.aynclub.akilleffect.effect.sound.Music;
 import com.aynclub.akilleffect.effect.sound.Thunder;
@@ -110,6 +111,8 @@ public class Manager {
                 return "&cTNT 爆炸";
             case "tntbreak":
                 return "&cTNT 碎裂";
+            case "woolbreak":
+                return "&f羊毛破碎";
             case "redstone":
                 return "&c红石碎裂";
             case "firework":
@@ -153,6 +156,8 @@ public class Manager {
                 return Arrays.asList("&7在击杀位置播放巨型爆炸特效。", "&7不会破坏方块。");
             case "tntbreak":
                 return Arrays.asList("&7让 TNT 碎裂粒子四散。", "&7爆裂感十足。");
+            case "woolbreak":
+                return Arrays.asList("&7随机一种羊毛颜色碎裂飞散。", "&7伴随羊毛方块被破坏的声音。");
             case "redstone":
                 return Arrays.asList("&7让红石碎裂粒子散开。", "&7红色光尘标记你的击杀。");
             case "firework":
@@ -200,6 +205,7 @@ public class Manager {
                 new FrostFlame(),
                 new TNT(),
                 new TNTBreak(),
+                new WoolBreak(),
                 new Redstone(),
                 new Firework(),
                 new Rainbow(),
