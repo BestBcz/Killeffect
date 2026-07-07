@@ -26,14 +26,14 @@ public class WoolBreak extends MainEffectKill {
     public void update(User user) {
         Location base = user.getPlayer().getLocation().clone().add(0.0D, 1.0D, 0.0D);
         World world = base.getWorld();
-        byte color = (byte) MathUtils.randomRange(0, 15);
+        byte color = (byte) MathUtils.randomRange(1, 15);
 
-        world.playSound(base, Sound.DIG_WOOL, 1.0F, 1.0F);
-        for (int i = 0; i < 26; i++) {
+        world.playSound(base, Sound.DIG_WOOL, 1.8F, 1.0F);
+        for (int i = 0; i < 42; i++) {
             Particle.play(base.clone().add(
                     MathUtils.randomRange(-0.9f, 0.9f),
                     MathUtils.randomRange(-0.45f, 0.7f),
-                    MathUtils.randomRange(-0.9f, 0.9f)), Effect.TILE_BREAK, Material.WOOL.getId(), color, 0.15F, 0.15F, 0.15F, 0.02F, 4);
+                    MathUtils.randomRange(-0.9f, 0.9f)), Effect.TILE_BREAK, Material.WOOL.getId(), color, 0.15F, 0.15F, 0.15F, 0.02F, 6);
         }
     }
 }
