@@ -23,7 +23,7 @@ public class Redstone extends MainEffectKill {
     @Override
     public void update(User user) {
         Location base = user.getPlayer().getLocation().clone().add(0.0D, 1.0D, 0.0D);
-        user.getPlayer().getWorld().playSound(base, Sound.DIG_STONE, 1.0F, 1.0F);
+        user.getPlayer().getWorld().playSound(base, Sound.DIG_STONE, 1.8F, 1.0F);
         for (int i = 0; i < 12; i++) {
             user.getPlayer().getWorld().playEffect(base.clone().add(
                     MathUtils.randomRange(-0.85f, 0.85f),
