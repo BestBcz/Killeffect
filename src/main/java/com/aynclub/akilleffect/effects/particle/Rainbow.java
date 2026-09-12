@@ -1,11 +1,12 @@
 package com.aynclub.akilleffect.effect.particle;
 
+import org.bukkit.inventory.ItemStack;
+
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,7 +19,7 @@ public class Rainbow extends MainEffectKill {
     private static final byte[] COLORS = new byte[]{14, 1, 4, 5, 11, 10, 2};
 
     public Rainbow() {
-        super("rainbow", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.rainbow.name")) : ("&d彩虹"), new ArrayList<String>(Arrays.asList("&7用七彩尘环包围击杀位置。", "&7让胜利变得更鲜明。")), Heads.REDSTONE.getTexture());
+        super("rainbow", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.rainbow.name")) : ("&d彩虹"), new ArrayList<String>(Arrays.asList("&7用七彩尘环包围击杀位置。", "&7让胜利变得更鲜明。")), new ItemStack(Material.STAINED_GLASS, 1, (short) 2));
     }
 
     @Override

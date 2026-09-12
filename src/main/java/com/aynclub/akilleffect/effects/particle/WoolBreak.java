@@ -1,11 +1,12 @@
 package com.aynclub.akilleffect.effect.particle;
 
+import org.bukkit.inventory.ItemStack;
+
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import com.aynclub.akilleffect.utils.maths.MathUtils;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -19,7 +20,7 @@ import java.util.Arrays;
 public class WoolBreak extends MainEffectKill {
 
     public WoolBreak() {
-        super("woolbreak", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.woolbreak.name")) : ("&f羊毛破碎"), new ArrayList<String>(Arrays.asList("&7随机一种羊毛颜色碎裂飞散。", "&7伴随羊毛方块被破坏的声音。")), Heads.Snow.getTexture());
+        super("woolbreak", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.woolbreak.name")) : ("&f羊毛破碎"), new ArrayList<String>(Arrays.asList("&7随机一种羊毛颜色碎裂飞散。", "&7伴随羊毛方块被破坏的声音。")), new ItemStack(Material.WOOL));
     }
 
     @Override

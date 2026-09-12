@@ -1,12 +1,15 @@
 package com.aynclub.akilleffect.effect.special;
 
+import org.bukkit.inventory.ItemStack;
+
+import org.bukkit.Material;
+
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,7 +20,7 @@ import java.util.Arrays;
 public class Tornado extends MainEffectKill {
 
     public Tornado() {
-        super("tornado", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tornado.name")) : ("&7龙卷风"), new ArrayList<String>(Arrays.asList("&7召唤一阵云雾龙卷风。", "&7从地面卷起到空中。")), Heads.TORNADO.getTexture());
+        super("tornado", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tornado.name")) : ("&7龙卷风"), new ArrayList<String>(Arrays.asList("&7召唤一阵云雾龙卷风。", "&7从地面卷起到空中。")), new ItemStack(Material.FEATHER));
     }
 
     @Override

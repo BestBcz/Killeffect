@@ -1,12 +1,15 @@
 package com.aynclub.akilleffect.effect.visual;
 
+import org.bukkit.inventory.ItemStack;
+
+import org.bukkit.Material;
+
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -19,7 +22,7 @@ import java.util.Arrays;
 public class FireTrail extends MainEffectKill {
 
     public FireTrail() {
-        super("firetrail", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.firetrail.name")) : ("&6火焰轨迹"), new ArrayList<String>(Arrays.asList("&7火焰围绕击杀点旋转。", "&7留下短暂燃烧轨迹。")), Heads.Fire.getTexture());
+        super("firetrail", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.firetrail.name")) : ("&6火焰轨迹"), new ArrayList<String>(Arrays.asList("&7火焰围绕击杀点旋转。", "&7留下短暂燃烧轨迹。")), new ItemStack(Material.FLINT_AND_STEEL));
     }
 
     @Override

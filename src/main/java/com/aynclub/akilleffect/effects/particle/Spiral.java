@@ -1,12 +1,15 @@
 package com.aynclub.akilleffect.effect.particle;
 
+import org.bukkit.inventory.ItemStack;
+
+import org.bukkit.Material;
+
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,7 +20,7 @@ import java.util.Arrays;
 public class Spiral extends MainEffectKill {
 
     public Spiral() {
-        super("spiral", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.spiral.name")) : ("&5螺旋"), new ArrayList<String>(Arrays.asList("&7魔法暴击粒子螺旋升起。", "&7将目标包进上升粒子中。")), Heads.WAVE.getTexture());
+        super("spiral", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.spiral.name")) : ("&5螺旋"), new ArrayList<String>(Arrays.asList("&7魔法暴击粒子螺旋升起。", "&7将目标包进上升粒子中。")), new ItemStack(Material.ENDER_PEARL));
     }
 
     @Override

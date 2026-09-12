@@ -149,13 +149,13 @@ public class ItemsUtils {
     }
 
     public static ItemStack create(ItemStack item, String name, List<String> lore) {
-        ItemStack itemStack = item;
-        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
-        skullMeta.setDisplayName(name);
+        ItemStack itemStack = item.clone();
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(name);
         if (lore != null) {
-            skullMeta.setLore(lore);
+            itemMeta.setLore(lore);
         }
-        itemStack.setItemMeta(skullMeta);
+        itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
 

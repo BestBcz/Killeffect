@@ -1,12 +1,15 @@
 package com.aynclub.akilleffect.effect.special;
 
+import org.bukkit.inventory.ItemStack;
+
+import org.bukkit.Material;
+
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,7 +20,7 @@ import java.util.Arrays;
 public class SnowFall extends MainEffectKill{
 
     public SnowFall() {
-        super("snowfall", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.snowfall.name")) : ("&f雪落"), new ArrayList<String>(Arrays.asList("&7让雪花在击杀点旋转飘落。", "&7清冷干净的收尾。")), Heads.Snow.getTexture());
+        super("snowfall", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.snowfall.name")) : ("&f雪落"), new ArrayList<String>(Arrays.asList("&7让雪花在击杀点旋转飘落。", "&7清冷干净的收尾。")), new ItemStack(Material.SNOW_BALL));
     }
 
     @Override

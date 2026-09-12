@@ -24,11 +24,10 @@ public abstract class MainEffectKill implements Listener {
     protected String displayName;
     protected List<String> description;
 
-    public MainEffectKill(String name, String displayName, ArrayList<String> description, String texture) {
+    public MainEffectKill(String name, String displayName, ArrayList<String> description, ItemStack icon) {
         instance = Main.getInstance();
         effectKill = this;
-        ItemStack head = ItemsUtils.getSkull(texture);
-        itemStack = ItemsUtils.create(head, Utils.colorize(displayName == null ? capitalizeFirstLetter(name) : displayName), description);
+        itemStack = ItemsUtils.create(icon, Utils.colorize(displayName == null ? capitalizeFirstLetter(name) : displayName), description);
         this.name = name;
         this.displayName = displayName == null ? capitalizeFirstLetter(name) : displayName;
         this.description = description;

@@ -7,7 +7,6 @@ import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -26,7 +25,7 @@ public class DropFlowers extends MainEffectKill {
     ArrayList<Item> items = new ArrayList<Item>();
 
     public DropFlowers() {
-        super("dropflowers", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.dropflowers.name")) : ("&d鲜花绽放"), new ArrayList<String>(Arrays.asList("&7让鲜花在击杀点绽放散落。", "&7适合温柔又醒目的收尾。")), Heads.FIREWORK.getTexture());
+        super("dropflowers", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.dropflowers.name")) : ("&d鲜花绽放"), new ArrayList<String>(Arrays.asList("&7让鲜花在击杀点绽放散落。", "&7适合温柔又醒目的收尾。")), new ItemStack(Material.RED_ROSE));
     }
 
     @Override

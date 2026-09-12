@@ -1,12 +1,15 @@
 package com.aynclub.akilleffect.effect.sound;
 
+import org.bukkit.inventory.ItemStack;
+
+import org.bukkit.Material;
+
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -22,7 +25,7 @@ public class Music extends MainEffectKill {
     private static final float[] PITCHES = new float[]{0.8F, 1.0F, 1.2F, 1.0F};
 
     public Music() {
-        super("music", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.music.name")) : ("&a音符"), new ArrayList<String>(Arrays.asList("&7播放一段短促旋律。", "&7音符会在目标上方升起。")), Heads.Redsoup.getTexture());
+        super("music", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.music.name")) : ("&a音符"), new ArrayList<String>(Arrays.asList("&7播放一段短促旋律。", "&7音符会在目标上方升起。")), new ItemStack(Material.NOTE_BLOCK));
     }
 
     @Override

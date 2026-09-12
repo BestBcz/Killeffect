@@ -26,7 +26,6 @@ import com.aynclub.akilleffect.utils.inventory.CustomInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -230,11 +229,9 @@ public class Manager {
         return new CustomInventory(Main.getInstance(), "effectkill", false, null,
                 Utils.colorize(String.valueOf(Utils.gfc("messages", "menu.effectKill"))), 45).advManipule(customInventory -> {
             if (user.getEffectKill() != null) {
-                ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-                SkullMeta skull = (SkullMeta) item.getItemMeta();
-                skull.setDisplayName(Utils.colorize(String.valueOf(Utils.gfc("messages", "menu.effect"))) + user.getEffectKill().getDisplayName());
-                skull.setOwner(user.getPlayer().getName());
-                item.setItemMeta(skull);
+                ItemStack item = ItemsUtils.create(user.getEffectKill().getItemStack(),
+                        Utils.colorize(String.valueOf(Utils.gfc("messages", "menu.effect"))) + user.getEffectKill().getDisplayName(),
+                        new ArrayList<String>());
                 customInventory.addItem(item, 0);
                 customInventory.addItem(ItemsUtils.create(getMenuDespawnMaterial(), (byte) 0,
                         Utils.colorize(String.valueOf(Utils.gfc("messages", "menu.despawn")))), 8);

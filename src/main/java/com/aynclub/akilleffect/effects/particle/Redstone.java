@@ -1,10 +1,11 @@
 package com.aynclub.akilleffect.effect.particle;
 
+import org.bukkit.inventory.ItemStack;
+
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import com.aynclub.akilleffect.utils.maths.MathUtils;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 public class Redstone extends MainEffectKill {
 
     public Redstone() {
-        super("redstone", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.redstone.name")) : ("&c红石碎裂"), new ArrayList<String>(Arrays.asList("&7让红石碎裂粒子散开。", "&7红色光尘标记你的击杀。")), Heads.REDSTONE.getTexture());
+        super("redstone", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.redstone.name")) : ("&c红石碎裂"), new ArrayList<String>(Arrays.asList("&7让红石碎裂粒子散开。", "&7红色光尘标记你的击杀。")), new ItemStack(Material.REDSTONE));
     }
 
     @Override

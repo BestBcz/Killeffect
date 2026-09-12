@@ -1,5 +1,7 @@
 package com.aynclub.akilleffect.effect.item;
 
+import org.bukkit.inventory.ItemStack;
+
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.ItemFactory;
@@ -7,7 +9,6 @@ import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -25,7 +26,7 @@ public class DropDiamond extends MainEffectKill {
     ArrayList<Item> items = new ArrayList<Item>();
 
     public DropDiamond() {
-        super("dropdiamond", YAMLUtils.get("messages").getFile().exists()?((String) Utils.gfc("messages", "effectKill.dropdiamond.name")) : ("&b钻石雨"), new ArrayList<String>(Arrays.asList("&7让钻石从击杀点四散飞出。", "&7胜利时更加耀眼。")), Heads.DIAMOND.getTexture());
+        super("dropdiamond", YAMLUtils.get("messages").getFile().exists()?((String) Utils.gfc("messages", "effectKill.dropdiamond.name")) : ("&b钻石雨"), new ArrayList<String>(Arrays.asList("&7让钻石从击杀点四散飞出。", "&7胜利时更加耀眼。")), new ItemStack(Material.DIAMOND));
     }
 
     @Override

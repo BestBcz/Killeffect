@@ -1,12 +1,15 @@
 package com.aynclub.akilleffect.effect.particle;
 
+import org.bukkit.inventory.ItemStack;
+
+import org.bukkit.Material;
+
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -18,7 +21,7 @@ import java.util.Arrays;
 public class Wave extends MainEffectKill {
 
     public Wave() {
-        super("wave", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.wave.name")) : ("&b冰雪波纹"), new ArrayList<String>(Arrays.asList("&7释放向上扩散的冰雪水波。", "&7粒子会环绕击杀位置升起。")), Heads.WAVE.getTexture());
+        super("wave", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.wave.name")) : ("&b冰雪波纹"), new ArrayList<String>(Arrays.asList("&7释放向上扩散的冰雪水波。", "&7粒子会环绕击杀位置升起。")), new ItemStack(Material.WATER_BUCKET));
     }
 
     @Override

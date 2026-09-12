@@ -1,12 +1,15 @@
 package com.aynclub.akilleffect.effect.particle;
 
+import org.bukkit.inventory.ItemStack;
+
+import org.bukkit.Material;
+
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -19,7 +22,7 @@ import java.util.Arrays;
 public class Firework extends MainEffectKill {
 
     public Firework() {
-        super("firework", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.firework.name")) : ("&e烟花"), new ArrayList<String>(Arrays.asList("&7发射一束短促烟花。", "&7在目标上方炸开火花。")), Heads.FIREWORK.getTexture());
+        super("firework", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.firework.name")) : ("&e烟花"), new ArrayList<String>(Arrays.asList("&7发射一束短促烟花。", "&7在目标上方炸开火花。")), new ItemStack(Material.FIREWORK));
     }
 
     @Override

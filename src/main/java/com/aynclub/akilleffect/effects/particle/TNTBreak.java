@@ -1,10 +1,11 @@
 package com.aynclub.akilleffect.effect.particle;
 
+import org.bukkit.inventory.ItemStack;
+
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import com.aynclub.akilleffect.utils.maths.MathUtils;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 public class TNTBreak extends MainEffectKill {
 
     public TNTBreak() {
-        super("tntbreak", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tntbreak.name")) : ("&cTNT 碎裂"), new ArrayList<String>(Arrays.asList("&7让 TNT 碎裂粒子四散。", "&7爆裂感十足。")), Heads.TNT.getTexture());
+        super("tntbreak", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tntbreak.name")) : ("&cTNT 碎裂"), new ArrayList<String>(Arrays.asList("&7让 TNT 碎裂粒子四散。", "&7爆裂感十足。")), new ItemStack(Material.SULPHUR));
     }
 
     @Override

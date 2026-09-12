@@ -1,5 +1,9 @@
 package com.aynclub.akilleffect.effect.sound;
 
+import org.bukkit.inventory.ItemStack;
+
+import org.bukkit.Material;
+
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.MatchAudience;
@@ -7,7 +11,6 @@ import com.aynclub.akilleffect.utils.LocalLightning;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -21,7 +24,7 @@ import java.util.List;
 public class Thunder extends MainEffectKill {
 
     public Thunder() {
-        super("thunder", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.thunder.name")) : ("&9雷暴"), new ArrayList<String>(Arrays.asList("&7召唤更强烈的雷暴收尾。", "&7带有雷声、烟雾和爆炸冲击。")), Heads.ANGRY.getTexture());
+        super("thunder", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.thunder.name")) : ("&9雷暴"), new ArrayList<String>(Arrays.asList("&7召唤更强烈的雷暴收尾。", "&7带有雷声、烟雾和爆炸冲击。")), new ItemStack(Material.FIREBALL));
     }
 
     @Override

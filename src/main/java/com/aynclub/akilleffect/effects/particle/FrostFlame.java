@@ -1,12 +1,15 @@
 package com.aynclub.akilleffect.effect.particle;
 
+import org.bukkit.inventory.ItemStack;
+
+import org.bukkit.Material;
+
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.Particle;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,7 +20,7 @@ import java.util.Arrays;
 public class FrostFlame extends MainEffectKill {
 
     public FrostFlame() {
-        super("frostflame", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.frostflame.name")) : ("&b冰焰"), new ArrayList<String>(Arrays.asList("&7召唤一圈上升的冰蓝火焰。", "&7冷冽又利落。")), Heads.FLAME.getTexture());
+        super("frostflame", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.frostflame.name")) : ("&b冰焰"), new ArrayList<String>(Arrays.asList("&7召唤一圈上升的冰蓝火焰。", "&7冷冽又利落。")), new ItemStack(Material.PACKED_ICE));
     }
 
     @Override

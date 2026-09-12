@@ -1,10 +1,13 @@
 package com.aynclub.akilleffect.effect.particle;
 
+import org.bukkit.inventory.ItemStack;
+
+import org.bukkit.Material;
+
 import com.aynclub.akilleffect.effect.MainEffectKill;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
-import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -15,7 +18,7 @@ import java.util.Arrays;
 public class TNT extends MainEffectKill {
 
     public TNT() {
-        super("tnt", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tnt.name")) : ("&cTNT 爆炸"), new ArrayList<String>(Arrays.asList("&7在击杀位置播放巨型爆炸特效。", "&7不会破坏方块。")), Heads.TNT.getTexture());
+        super("tnt", YAMLUtils.get("messages").getFile().exists() ? ((String) Utils.gfc("messages", "effectKill.tnt.name")) : ("&cTNT 爆炸"), new ArrayList<String>(Arrays.asList("&7在击杀位置播放巨型爆炸特效。", "&7不会破坏方块。")), new ItemStack(Material.TNT));
     }
 
     @Override
