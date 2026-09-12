@@ -7,6 +7,7 @@ import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -92,7 +93,8 @@ public class Events implements Listener {
         return "";
     }
 
-    @EventHandler
+    // Capture match membership and death position before Practice transitions the victim.
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onDeath(PlayerDeathEvent event) {
         Player killer = event.getEntity().getKiller();
         if (killer == null) {

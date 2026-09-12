@@ -2,7 +2,8 @@ package com.aynclub.akilleffect.effect.sound;
 
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
-import com.aynclub.akilleffect.utils.Particle;
+import com.aynclub.akilleffect.utils.MatchAudience;
+import com.aynclub.akilleffect.utils.LocalLightning;
 import com.aynclub.akilleffect.utils.User;
 import com.aynclub.akilleffect.utils.Utils;
 import com.aynclub.akilleffect.utils.config.YAMLUtils;
@@ -10,11 +11,12 @@ import com.aynclub.akilleffect.utils.inventory.Heads;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Thunder extends MainEffectKill {
 
@@ -25,25 +27,38 @@ public class Thunder extends MainEffectKill {
     @Override
     public void update(User user) {
         final Location base = user.getPlayer().getLocation().clone();
-        final World world = base.getWorld();
-        if (world == null) {
+        final MatchAudience audience = MatchAudience.capture(user.getPlayer());
+        if (base.getWorld() == null || audience == null) {
             return;
         }
 
-        world.playSound(base, Sound.AMBIENCE_THUNDER, 1.0F, 1.0F);
-        world.strikeLightningEffect(base);
+        List<Player> players = audience.getPlayers(base);
+        if (players.isEmpty()) {
+            return;
+        }
+        LocalLightning.play(base, players);
         new BukkitRunnable() {
             private int tick = 0;
 
             @Override
             public void run() {
+                List<Player> players = audience.getPlayers(base);
+                if (players.isEmpty()) {
+                    cancel();
+                    return;
+                }
                 tick++;
                 for (int i = 0; i < 4; i++) {
-                    Particle.play(base.clone().add((Math.random() - 0.5D) * 2.0D, 1.0D + Math.random(), (Math.random() - 0.5D) * 2.0D), Effect.LARGE_SMOKE);
+                    Location smoke = base.clone().add((Math.random() - 0.5D) * 2.0D, 1.0D + Math.random(), (Math.random() - 0.5D) * 2.0D);
+                    for (Player player : players) {
+                        player.spigot().playEffect(smoke, Effect.LARGE_SMOKE, 0, 0, 0, 0, 0, 0, 1, 128);
+                    }
                 }
                 if (tick >= 8) {
-                    world.playSound(base, Sound.EXPLODE, 0.8F, 0.9F);
-                    world.playEffect(base, Effect.EXPLOSION_LARGE, 0);
+                    for (Player player : players) {
+                        player.playSound(base, Sound.EXPLODE, 0.8F, 0.9F);
+                        player.spigot().playEffect(base, Effect.EXPLOSION_LARGE, 0, 0, 0, 0, 0, 0, 1, 128);
+                    }
                     cancel();
                 }
             }
