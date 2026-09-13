@@ -2,74 +2,80 @@ package com.aynclub.akilleffect.managers;
 
 import com.aynclub.akilleffect.Main;
 import com.aynclub.akilleffect.effect.MainEffectKill;
+import com.aynclub.akilleffect.utils.BotDetector;
 import com.aynclub.akilleffect.utils.User;
-import org.bukkit.configuration.file.YamlConfiguration;
-
+import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
-public class FlatFile {
-    private static final String DEFAULT_EFFECT_NAME = "lightning";
-    private static final String NO_EFFECT_NAME = "none";
+/** Player/User access is confined to the server thread. */
+public final class FlatFile {
+    private static final Set<UUID> TRANSIENT_BOTS = new HashSet<UUID>();
+    private static EffectStore store;
 
-    public static void checkDatabase() {
-        File cfgFile = getDatabaseFile();
-        File parent = cfgFile.getParentFile();
-        if (parent != null && !parent.exists()) {
-            parent.mkdirs();
+    public static void loadAll() throws IOException {
+        store = new EffectStore(new File(Main.getInstance().getDataFolder(), "database.yml"),
+                Main.getInstance().getLogger(), 5000);
+    }
+
+    public static void join(Player player) {
+        UUID uuid = player.getUniqueId();
+        if (BotDetector.isMineralBot(player)) {
+            TRANSIENT_BOTS.add(uuid);
+            User.getUser(uuid).setEffectKill(getDefaultEffect());
+            return;
         }
-        if (!cfgFile.exists()) {
-            try {
-                cfgFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        getValue(uuid);
+    }
+
+    public static void quit(UUID uuid) {
+        if (!TRANSIENT_BOTS.remove(uuid)) {
+            setValue(uuid);
         }
+        User.removeUser(uuid);
     }
 
     public static void setValue(UUID uuid) {
-        YamlConfiguration cfg = getConfig();
-        if (User.getUsers().containsKey(uuid) && User.getUsers().get(uuid).getEffectKill() != null) {
-            cfg.set(uuid.toString(), User.getUser(uuid).getEffectKill().getName());
-        } else {
-            cfg.set(uuid.toString(), NO_EFFECT_NAME);
+        if (TRANSIENT_BOTS.contains(uuid) || store == null) {
+            return;
         }
-
-        try {
-            cfg.save(getDatabaseFile());
-        } catch (IOException e) {
-            e.printStackTrace();
+        User user = User.getUsers().get(uuid);
+        if (user != null) {
+            store.put(uuid, user.getEffectKill() == null ? "none" : user.getEffectKill().getName());
         }
     }
 
     public static void getValue(UUID uuid) {
-        YamlConfiguration cfg = getConfig();
         User user = User.getUser(uuid);
-        if (!cfg.contains(uuid.toString())) {
+        if (TRANSIENT_BOTS.contains(uuid)) {
             user.setEffectKill(getDefaultEffect());
             return;
         }
+        String name = store.get(uuid);
+        MainEffectKill effect = name == null ? getDefaultEffect() : Main.getInstance().getEffectKill().get(name);
+        user.setEffectKill("none".equalsIgnoreCase(name) ? null : effect == null ? getDefaultEffect() : effect);
+    }
 
-        String effectName = cfg.getString(uuid.toString());
-        if (effectName == null || effectName.equalsIgnoreCase(NO_EFFECT_NAME)) {
-            user.setEffectKill(null);
-            return;
+    public static MainEffectKill getDefaultEffect() {
+        return Main.getInstance().getEffectKill().get("lightning");
+    }
+
+    public static void shutdown() {
+        try {
+            if (store != null) {
+                for (UUID uuid : User.getUsers().keySet()) {
+                    setValue(uuid);
+                }
+                store.close();
+            }
+        } finally {
+            store = null;
+            TRANSIENT_BOTS.clear();
+            User.clearUsers();
+            BotDetector.reset();
         }
-
-        MainEffectKill effectKill = Main.getInstance().getEffectKill().get(effectName);
-        user.setEffectKill(effectKill == null ? getDefaultEffect() : effectKill);
-    }
-
-    private static MainEffectKill getDefaultEffect() {
-        return Main.getInstance().getEffectKill().get(DEFAULT_EFFECT_NAME);
-    }
-
-    private static File getDatabaseFile() {
-        return new File(Main.getInstance().getDataFolder(), "database.yml");
-    }
-
-    private static YamlConfiguration getConfig() {
-        return YamlConfiguration.loadConfiguration(getDatabaseFile());
     }
 }

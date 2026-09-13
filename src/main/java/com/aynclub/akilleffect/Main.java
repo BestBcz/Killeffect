@@ -57,13 +57,19 @@ public class Main extends JavaPlugin {
             getLogger().warning("Command 'killeffect' is missing from plugin.yml.");
         }
 
+        try {
+            FlatFile.loadAll();
+        } catch (java.io.IOException e) {
+            getLogger().log(java.util.logging.Level.SEVERE, "Cannot load database.yml", e);
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         getServer().getPluginManager().registerEvents(new Events(), this);
-        FlatFile.checkDatabase();
 
         PREFIX = Utils.colorize(String.valueOf(Utils.gfc("messages", "prefix")));
 
         for (Player player : Bukkit.getOnlinePlayers()) {
-            FlatFile.getValue(player.getUniqueId());
+            FlatFile.join(player);
         }
 
         getLogger().info("Loaded " + MainEffectKill.instanceList.size() + " kill effects.");
@@ -71,9 +77,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            FlatFile.setValue(player.getUniqueId());
-        }
+        FlatFile.shutdown();
     }
 
     public Map<String, MainEffectKill> getEffectKill() {

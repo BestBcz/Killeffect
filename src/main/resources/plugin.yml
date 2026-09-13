@@ -3,6 +3,7 @@ version: '1.0-SNAPSHOT'
 author: 73m9
 description: Minecraft 1.7.10 击杀特效插件
 main: com.aynclub.akilleffect.Main
+softdepend: [MicetPvP]
 commands:
   killeffect:
     aliases: [akilleffect, ak]

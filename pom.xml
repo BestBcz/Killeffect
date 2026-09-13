@@ -25,6 +25,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
+                    <!-- The server JAR contains legacy annotation processors; this project uses none. -->
+                    <proc>none</proc>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>

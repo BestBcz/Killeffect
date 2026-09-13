@@ -28,6 +28,14 @@ public class User {
         return users;
     }
 
+    public static User removeUser(UUID uuid) {
+        return users.remove(uuid);
+    }
+
+    public static void clearUsers() {
+        users.clear();
+    }
+
     public static Stream<User> getAllUsers() {
         return users.values().stream();
     }

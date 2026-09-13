@@ -18,12 +18,12 @@ public class Events implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        FlatFile.getValue(event.getPlayer().getUniqueId());
+        FlatFile.join(event.getPlayer());
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        FlatFile.setValue(event.getPlayer().getUniqueId());
+        FlatFile.quit(event.getPlayer().getUniqueId());
     }
 
     @EventHandler
@@ -50,6 +50,7 @@ public class Events implements Listener {
         if (displayName.startsWith(despawnPrefix)) {
             if (user.getEffectKill() != null) {
                 user.getEffectKill().despawn(user);
+                FlatFile.setValue(event.getWhoClicked().getUniqueId());
                 user.getPlayer().sendMessage(Utils.colorize(String.valueOf(Utils.gfc("messages", "remove")).replace("%prefix%", Main.PREFIX)));
             }
             event.getWhoClicked().closeInventory();
@@ -75,6 +76,7 @@ public class Events implements Listener {
         }
 
         user.setEffectKill(effectKill);
+        FlatFile.setValue(event.getWhoClicked().getUniqueId());
         String configuredName = String.valueOf(Utils.gfc("messages", "effectKill." + effectKill.getName() + ".name"));
         user.getPlayer().sendMessage(Utils.colorize(String.valueOf(Utils.gfc("messages", "spawn"))
                 .replace("%prefix%", Main.PREFIX)
