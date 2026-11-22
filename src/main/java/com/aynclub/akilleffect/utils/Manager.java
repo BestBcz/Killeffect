@@ -18,6 +18,7 @@ import com.aynclub.akilleffect.effect.particle.WoolBreak;
 import com.aynclub.akilleffect.effect.sound.Lightning;
 import com.aynclub.akilleffect.effect.sound.Music;
 import com.aynclub.akilleffect.effect.sound.Thunder;
+import com.aynclub.akilleffect.effect.special.EnderDragonDeath;
 import com.aynclub.akilleffect.effect.special.SnowFall;
 import com.aynclub.akilleffect.effect.special.Tornado;
 import com.aynclub.akilleffect.effect.visual.FireTrail;
@@ -128,6 +129,8 @@ public class Manager {
                 return "&b雷击";
             case "thunder":
                 return "&9雷暴";
+            case "enderdragon":
+                return "&5末影龙陨落";
             case "music":
                 return "&a音符";
             case "firetrail":
@@ -214,7 +217,8 @@ public class Manager {
                 new Lightning(),
                 new Thunder(),
                 new Music(),
-                new FireTrail()));
+                new FireTrail(),
+                new EnderDragonDeath()));
 
         for (MainEffectKill effectKill : MainEffectKill.instanceList) {
             MainEffectKill.effectList.add(effectKill.getClass());

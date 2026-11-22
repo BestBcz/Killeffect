@@ -3,6 +3,7 @@ package com.aynclub.akilleffect.utils;
 import com.aynclub.akilleffect.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -43,15 +44,15 @@ public final class MatchAudience {
     }
 
     public List<Player> getPlayers(Location location) {
-        if (!plugin.isEnabled() || location.getWorld() == null) {
+        World world = location.getWorld();
+        if (!plugin.isEnabled() || world == null) {
             return Collections.emptyList();
         }
         List<Player> players = new ArrayList<Player>();
         try {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 // Use current membership: eliminated spectators remain eligible; lobby players do not.
-                if (player.isOnline() && player.getWorld().equals(location.getWorld())
-                        && lookup.invoke(handler, player) == match) {
+                if (isInMatch(player, world)) {
                     players.add(player);
                 }
             }
@@ -60,6 +61,23 @@ public final class MatchAudience {
             return Collections.emptyList();
         }
         return players;
+    }
+
+    public Object getMatchIdentity() {
+        return match;
+    }
+
+    public boolean contains(Player player, World world) {
+        try {
+            return plugin.isEnabled() && isInMatch(player, world);
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError exception) {
+            logFailure(exception);
+            return false;
+        }
+    }
+
+    private boolean isInMatch(Player player, World world) throws ReflectiveOperationException {
+        return player.isOnline() && player.getWorld().equals(world) && lookup.invoke(handler, player) == match;
     }
 
     private static void logFailure(Throwable exception) {

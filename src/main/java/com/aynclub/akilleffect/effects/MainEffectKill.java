@@ -51,6 +51,9 @@ public abstract class MainEffectKill implements Listener {
         update(victim);
     }
 
+    public void shutdown() {
+    }
+
     public String getName() {
         return name;
     }

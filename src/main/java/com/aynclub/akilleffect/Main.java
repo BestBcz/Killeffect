@@ -77,6 +77,9 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (MainEffectKill effect : effectKillMap.values()) {
+            effect.shutdown();
+        }
         FlatFile.shutdown();
     }
 
