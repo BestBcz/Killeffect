@@ -28,9 +28,10 @@ import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public final class EnderDragonDeath extends MainEffectKill {
-    private static final int FIRST_BURST_TICK = 56;
+    private static final int DRAGON_GROWL_TICK = 12;
     private static final int FINAL_BURST_TICK = 94;
     private static final int DURATION_TICKS = 100;
     // Vanilla 1.7.10 advances the dying dragon by this amount on each client tick.
@@ -41,7 +42,7 @@ public final class EnderDragonDeath extends MainEffectKill {
 
     public EnderDragonDeath() {
         super("enderdragon", "&5末影龙陨落", new ArrayList<String>(Arrays.asList(
-                "&7末影龙从击杀点升起。", "&7伴随短促的爆炸声消散。")), new ItemStack(Material.DRAGON_EGG));
+                "&7击杀时引爆 TNT，末影龙随即升起。", "&7伴随原版末影龙的低吼。")), new ItemStack(Material.DRAGON_EGG));
     }
 
     @Override
@@ -58,6 +59,7 @@ public final class EnderDragonDeath extends MainEffectKill {
             previous.destroy();
         }
 
+        Location deathLocation = victim.getLocation();
         Location origin = victim.getEyeLocation().add(0, 1.0D, 0);
         List<Player> viewers = audience.getPlayers(origin);
         if (viewers.isEmpty()) {
@@ -69,7 +71,20 @@ public final class EnderDragonDeath extends MainEffectKill {
         dragon.setPositionRotation(origin.getX(), origin.getY(), origin.getZ(), origin.getYaw(), 0.0F);
         dragon.setHealth(0.0F);
         Packet spawn = new PacketPlayOutSpawnEntityLiving(dragon);
-        viewers.removeIf(player -> !sendPacket(player, spawn));
+
+        // Match the vanilla explosion used by the TNT kill effect with client-only packets.
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        float tntPitch = (1.0F + (random.nextFloat() - random.nextFloat()) * 0.2F) * 0.7F;
+        Packet tntSound = soundAt(deathLocation, Sound.EXPLODE, 4.0F, tntPitch);
+        Packet tntBurst = explosionAt(deathLocation);
+        for (Iterator<Player> iterator = viewers.iterator(); iterator.hasNext();) {
+            Player viewer = iterator.next();
+            sendPacket(viewer, tntSound);
+            sendPacket(viewer, tntBurst);
+            if (!sendPacket(viewer, spawn)) {
+                iterator.remove();
+            }
+        }
         if (viewers.isEmpty()) {
             return;
         }
@@ -98,6 +113,16 @@ public final class EnderDragonDeath extends MainEffectKill {
             animation.destroy();
         }
         active.clear();
+    }
+
+    private static Packet soundAt(Location location, Sound sound, float volume, float pitch) {
+        return new PacketPlayOutNamedSoundEffect(CraftSound.getSound(sound),
+                location.getX(), location.getY(), location.getZ(), volume, pitch);
+    }
+
+    private static Packet explosionAt(Location location) {
+        return new PacketPlayOutWorldParticles(Effect.EXPLOSION_HUGE.getName(),
+                (float) location.getX(), (float) location.getY(), (float) location.getZ(), 0, 0, 0, 0, 1);
     }
 
     private static boolean sendPacket(Player player, Packet packet) {
@@ -144,10 +169,10 @@ public final class EnderDragonDeath extends MainEffectKill {
             }
 
             age++;
-            if (age == FIRST_BURST_TICK) {
-                playBurst(0.35F, 1.15F, false);
+            if (age == DRAGON_GROWL_TICK) {
+                broadcast(soundAt(dragonLocation(), Sound.ENDERDRAGON_GROWL, 0.8F, 1.0F));
             } else if (age == FINAL_BURST_TICK) {
-                playBurst(0.65F, 0.9F, true);
+                broadcast(explosionAt(dragonLocation()));
             } else if (age == DURATION_TICKS) {
                 destroy();
                 return true;
@@ -155,25 +180,18 @@ public final class EnderDragonDeath extends MainEffectKill {
             return false;
         }
 
-        private void playBurst(float volume, float pitch, boolean finale) {
-            double x = origin.getX();
-            double y = origin.getY() + age * RISE_PER_TICK;
-            double z = origin.getZ();
-            Packet sound = new PacketPlayOutNamedSoundEffect(CraftSound.getSound(Sound.EXPLODE), x, y, z, volume, pitch);
-            Packet particles = finale ? new PacketPlayOutWorldParticles(Effect.EXPLOSION_HUGE.getName(),
-                    (float) x, (float) y, (float) z, 0, 0, 0, 0, 1) : null;
+        private Location dragonLocation() {
+            return origin.clone().add(0, age * RISE_PER_TICK, 0);
+        }
+
+        private void broadcast(Packet packet) {
             for (Player viewer : viewers) {
-                sendPacket(viewer, sound);
-                if (particles != null) {
-                    sendPacket(viewer, particles);
-                }
+                sendPacket(viewer, packet);
             }
         }
 
         private void destroy() {
-            for (Player viewer : viewers) {
-                sendPacket(viewer, destroy);
-            }
+            broadcast(destroy);
             viewers.clear();
         }
     }
