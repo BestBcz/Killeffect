@@ -60,7 +60,7 @@ public final class EnderDragonDeath extends MainEffectKill {
         }
 
         Location deathLocation = victim.getLocation();
-        Location origin = victim.getEyeLocation().add(0, 1.0D, 0);
+        Location origin = victim.getEyeLocation();
         List<Player> viewers = audience.getPlayers(origin);
         if (viewers.isEmpty()) {
             return;
